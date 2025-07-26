@@ -9,3 +9,5 @@ COPY ${artifact} app.jar
 
 # This should not be changed
 ENTRYPOINT ["java","-jar","app.jar"]
+
+CMD ["tail", "-f", "/dev/null"]
