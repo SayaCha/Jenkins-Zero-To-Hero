@@ -1,14 +1,11 @@
-FROM maven:3.9.6-eclipse-temurin-17
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-# Install dependencies and mvnd
-RUN apt-get update && apt-get install -y unzip curl && \
-    curl -LO https://downloads.apache.org/maven/mvnd/0.9.0/apache-mvnd-0.9.0-linux-amd64.zip && \
-    unzip apache-mvnd-0.9.0-linux-amd64.zip -d /opt && \
-    mv /opt/apache-mvnd-0.9.0-linux-amd64 /opt/mvnd && \
-    ln -s /opt/mvnd/bin/mvnd /usr/bin/mvnd && \
-    rm apache-mvnd-0.9.0-linux-amd64.zip
+# Simply the artifact path
+ARG artifact=target/spring-boot-web.jar
 
-ENV PATH="/opt/mvnd/bin:$PATH"
+WORKDIR /opt/app
 
-# Keeps container alive for Jenkins pipeline
-CMD ["tail", "-f", "/dev/null"]
+COPY ${artifact} app.jar
+
+# This should not be changed
+ENTRYPOINT ["java","-jar","app.jar"]
