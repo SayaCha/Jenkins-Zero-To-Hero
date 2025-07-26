@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'sayalichawane02/mvn-sayali-docker-agent:v2'
+      image 'mvn-sayali-docker-agent:v2'
       reuseNode true
       args '--user root' // mount Docker socket to access the host's Docker daemon
     }
